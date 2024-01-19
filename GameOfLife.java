@@ -111,18 +111,15 @@ public class GameOfLife {
     // Assumes that i is at least 1 and at most the number of rows in the board - 1.
     // Assumes that j is at least 1 and at most the number of columns in the board - 1.
     public static int count(int[][] board, int i, int j) {
-        int countalive = 0;
-        for (int k = i - 1; k <= i + 1; k++) {
-            for (int l = j - 1; l <= j + 1; l++) {
-                if (k == i && l == j) {
-                    continue;
-                }
-                if (k >= 0 && k < board.length && l >= 0 && l < board[0].length && board[k][l] == 1) {
-                    countalive++;
+        int neighbors = 0;
+        for (int row = i - 1; row <= i + 1; row++) {
+            for (int col = j - 1; col <= j + 1; col++) {
+                if (board[row][col] == 1) {
+                    neighbors++;
                 }
             }
         }
-        return countalive;
+        return neighbors - board[i][j]; //reduces the cell from its own neighbors count
     }
 
     // Prints the board. Alive and dead cells are printed as 1 and 0, respectively.
