@@ -95,23 +95,13 @@ public class GameOfLife {
     // Assumes that j is at least 1 and at most the number of columns in the board - 1.
     // Uses the count(board,i,j) function to count the number of alive neighbors.
     public static int cellValue(int[][] board, int i, int j) {
-        int neighborsinCell = count(board, i, j);
-        for (int k = 1; k < board.length - 1; k++) {
-            for (int l = 1; l < board[k - 1].length; l++) {
-                if (k == i && l == j) {
-                    if (board[i][j] == 1) {
-                        if (neighborsinCell == 2 || neighborsinCell == 3) {
-                            return 1;
-                        } else if (neighborsinCell > 3) {
-                            return 0;
-                        }
-                    } else {
-                        if (neighborsinCell == 3) {
-                            return 1;
-                        }
-                    }
-                }
-            }
+        int neighbors = count(board, i, j);
+        if (neighbors < 2 || neighbors > 3) {//any cell with 1,0 or 4+ neighbors = dead
+            return 0;
+        } else if (board[i][j] == 1) {//alive cell with 2-3 neighbors = alive
+            return 1;
+        } else if (neighbors == 3) {//dead cell with 3 neighbors = alive
+            return 1;
         }
         return 0;
     }
