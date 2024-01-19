@@ -1,13 +1,20 @@
+/**
+ * Game of Life.
+ * Usage: "java GameOfLife fileName"
+ * The file represents the initial board.
+ * The file format is described in the homework document.
+ */
+
 public class GameOfLife {
 
     public static void main(String[] args) {
-        String fileName = args[0];
+        String fileName = "pulsar.dat";//args[0];
         //// Uncomment the test that you want to execute, and re-compile.
         //// (Run one test at a time).
-        //// test1(fileName);
+        test1(fileName);
         //// test2(fileName);
-        //test3(fileName, 3);
-        play(fileName);
+        //// test3(fileName, 3);
+        //// play(fileName);
     }
 
     // Reads the data file and prints the initial board.
@@ -18,15 +25,13 @@ public class GameOfLife {
 
     // Reads the data file, and runs a test that checks
     // the count and cellValue functions.
-    private static void test2(String fileName, int i, int j) {
+    public static void test2(String fileName) {
         int[][] board = read(fileName);
-        System.out.println("The number of alive around- " + count(board, i, j));
-        System.out.println("The next value of the cell is- " + cellValue(board, i, j));
     }
 
     // Reads the data file, plays the game for Ngen generations,
     // and prints the board at the beginning of each generation.
-    private static void test3(String fileName, int Ngen) {
+    public static void test3(String fileName, int Ngen) {
         int[][] board = read(fileName);
         for (int gen = 0; gen < Ngen; gen++) {
             System.out.println("Generation " + gen + ":");
@@ -72,14 +77,11 @@ public class GameOfLife {
     public static int[][] evolve(int[][] board) {
         int rows = board.length;
         int cols = board[0].length;
-        int[][] newBoard = new int[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if ((i == 0) || (j == 0) || (i == rows - 1) || (j == cols - 1)) {
-                    newBoard[i][j] = 0;
-                } else {
-                    newBoard[i][j] = (cellValue(board, i, j));
-                }
+        int[][] newBoard = new int[rows][cols];//creates new board of the same dimensions
+
+        for (int i = 1; i < rows - 1; i++) {
+            for (int j = 1; j < cols - 1; j++) {
+                newBoard[i][j] = cellValue(board, i, j);//sets cell value
             }
         }
         return newBoard;
@@ -89,7 +91,7 @@ public class GameOfLife {
     // If the cell is alive (equals 1) and has fewer than two live neighbors, it dies (becomes 0).
     // If the cell is alive and has two or three live neighbors, it remains alive.
     // If the cell is alive and has more than three live neighbors, it dies.
-    // If the cell is dead and and has three live neighbors, it becomes alive.
+    // If the cell is dead and has three live neighbors, it becomes alive.
     // Otherwise the cell does not change.
     // Assumes that i is at least 1 and at most the number of rows in the board - 1.
     // Assumes that j is at least 1 and at most the number of columns in the board - 1.
@@ -124,8 +126,8 @@ public class GameOfLife {
 
     // Prints the board. Alive and dead cells are printed as 1 and 0, respectively.
     public static void print(int[][] arr) {
-        for (int i = 1; i <= arr.length - 2; i++) {
-            for (int j = 1; j <= arr[i].length - 2; j++) {
+        for (int i = 1; i < arr.length - 1; i++) {
+            for (int j = 1; j < arr[i].length - 1; j++) {
                 System.out.printf("%3s", arr[i][j]);
             }
             System.out.println();
